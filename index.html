@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Studio | Watch Customization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Import Map for Three.js -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-header">
+        <div class="logo">NEON <span>STUDIO</span></div>
+    </nav>
+
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container">
+        <canvas id="watch-canvas"></canvas>
+    </div>
+
+    <!-- Zoom Controls -->
+    <div class="zoom-controls">
+        <button class="zoom-btn" id="zoom-in" aria-label="Zoom in">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+        <button class="zoom-btn" id="zoom-out" aria-label="Zoom out">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+        </button>
+        <button class="zoom-btn" id="reset-view" aria-label="Reset view">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Customization Panel -->
+    <aside class="customization-panel" id="customization-panel">
+        <div class="p-6 pt-24">
+            <h2 class="font-display text-2xl mb-2" style="color: var(--silver-light);">Customize Your Timepiece</h2>
+            <p class="text-xs tracking-widest uppercase" style="color: var(--text-secondary);">Craft your perfect watch</p>
+        </div>
+
+        <!-- Dial Customization -->
+        <div class="option-group">
+            <h3 class="section-title">Dial Color</h3>
+            <div class="grid grid-cols-4 gap-3" id="dial-colors">
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch active" data-color="#1a1a1a" style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Onyx</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#1a3a5c" style="background: linear-gradient(135deg, #1a3a5c, #2a5a8c);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Navy</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#2d4a3e" style="background: linear-gradient(135deg, #2d4a3e, #3d6a5e);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Forest</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#4a3a2d" style="background: linear-gradient(135deg, #4a3a2d, #6a5a4d);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Brown</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#e8e8e8" style="background: linear-gradient(135deg, #e8e8e8, #ffffff);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Pearl</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#8b0000" style="background: linear-gradient(135deg, #8b0000, #bb2222);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Burgundy</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#c0c0c0" style="background: linear-gradient(135deg, #c0c0c0, #e0e0e0);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Silver</span>
+                </div>
+                <div class="flex flex-col items-center gap-2">
+                    <div class="color-swatch" data-color="#d4af37" style="background: linear-gradient(135deg, #d4af37, #f4cf57);"></div>
+                    <span class="text-xs" style="color: var(--text-secondary);">Gold</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Case Material -->
+        <div class="option-group">
+            <h3 class="section-title">Case Material</h3>
+            <div class="grid grid-cols-2 gap-3" id="case-materials">
+                <button class="material-btn active" data-material="steel">Stainless Steel</button>
+                <button class="material-btn" data-material="gold">18K Gold</button>
+                <button class="material-btn" data-material="rose-gold">Rose Gold</button>
+                <button class="material-btn" data-material="titanium">Titanium</button>
+            </div>
+        </div>
+
+        <!-- Case Size -->
+        <div class="option-group">
+            <h3 class="section-title">Case Size</h3>
+            <div class="flex gap-3" id="case-sizes">
+                <button class="material-btn" data-size="38">38mm</button>
+                <button class="material-btn active" data-size="42">42mm</button>
+                <button class="material-btn" data-size="46">46mm</button>
+            </div>
+        </div>
+
+        <!-- Strap Selection -->
+        <div class="option-group">
+            <h3 class="section-title">Strap</h3>
+            <div class="grid grid-cols-2 gap-3" id="straps">
+                <div class="strap-preview active" data-strap="leather-black" style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);">
+                    <div class="p-2 text-xs" style="color: var(--text-secondary);">Black Leather</div>
+                </div>
+                <div class="strap-preview" data-strap="leather-brown" style="background: linear-gradient(135deg, #3d2a1a 0%, #5d4a3a 50%, #3d2a1a 100%);">
+                    <div class="p-2 text-xs" style="color: var(--text-secondary);">Brown Leather</div>
+                </div>
+                <div class="strap-preview" data-strap="steel" style="background: linear-gradient(135deg, #606060 0%, #909090 25%, #707070 50%, #909090 75%, #606060 100%);">
+                    <div class="p-2 text-xs" style="color: var(--text-secondary);">Steel Bracelet</div>
+                </div>
+                <div class="strap-preview" data-strap="rubber" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);">
+                    <div class="p-2 text-xs" style="color: var(--text-secondary);">Sport Rubber</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hands Style -->
+        <div class="option-group">
+            <h3 class="section-title">Hands Style</h3>
+            <div class="grid grid-cols-3 gap-3" id="hands-styles">
+                <button class="material-btn active" data-hands="classic">Classic</button>
+                <button class="material-btn" data-hands="dauphine">Dauphine</button>
+                <button class="material-btn" data-hands="sword">Sword</button>
+            </div>
+        </div>
+
+        <!-- Add to Cart -->
+        <div class="option-group">
+            <button class="w-full py-4 text-sm tracking-widest uppercase font-medium transition-all duration-300 hover:scale-[1.02]" style="background: linear-gradient(135deg, #d4af37, #b8962f); color: #0a0a0a; border: none; border-radius: 2px;">
+                Add to Collection
+            </button>
+        </div>
+    </aside>
+
+    <!-- Toggle Panel Button -->
+    <button class="toggle-panel-btn" id="toggle-panel" aria-label="Toggle customization panel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="toggle-icon">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+    </button>
+
+    <!-- Time Display -->
+    <div class="time-display">
+        <div class="current-time" id="current-time">00:00:00</div>
+        <div class="current-date" id="current-date">Monday, January 1</div>
+    </div>
+
+    <!-- Price Tag -->
+    <div class="price-tag">
+        <div class="price-label">Starting from</div>
+        <div class="price-value" id="price-value">$4,850</div>
+    </div>
+
+    <!-- Instruction Hint -->
+    <div class="instruction-hint">Drag to rotate | Scroll to zoom</div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
